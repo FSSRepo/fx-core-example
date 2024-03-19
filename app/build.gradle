@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        release {
+            Properties keystoreProps = new Properties()
+            keystoreProps.load(new FileInputStream(file('keystore.config')))
+
+            keyAlias keystoreProps['keyAlias']
+            keyPassword keystoreProps['keyPassword']
+            storePassword keystoreProps['storePassword']
+            storeFile file(keystoreProps['keyPath'])
+        }
+    }
+
+    compileSdkVersion 33
+    buildToolsVersion '34.0.0'
+
+    defaultConfig {
+        applicationId "com.steward.prototype"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+	
+	compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+}
+
+dependencies {
+    implementation files('libs/libfx-assets.jar', 'libs/libfx-classes.jar','libs/libopenpl.jar')
+}
