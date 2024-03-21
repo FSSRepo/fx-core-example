@@ -1,2 +1,2 @@
 rootProject.name='force-x-example'
-include ':app'
+include 'android', 'core', 'desktop'
